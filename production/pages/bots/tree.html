@@ -1,0 +1,171 @@
+<style>
+    .select2-container--default .select2-selection--single .select2-selection__rendered{
+        width: 868px;
+    }
+    .toggleContent{
+        display :none;
+        position: absolute;
+        z-index: 999999999;
+        background: #fff;
+        padding: 10px;
+        border: 4px solid #0072C6;
+        border-radius: 5px;
+        right: 0;
+    }
+    .bt {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+    html, body {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        /*overflow: hidden;*/
+    }
+
+    #people {
+        width: 100%;
+        height: 100%;
+    }
+
+    /*    .btn path {
+            fill: #dbdbdb;
+        }
+    
+        .btn:hover path {
+            fill: #ffffff;
+        }*/
+
+</style>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3> Gestion des Bots </h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Bot : {{ botname}}</h2>&nbsp;
+                        <button class="btn btn-success btn-sm pull-right" style="clear:both;" onclick='$("#toggleContent").show("slide", {direction: "right"}, 500);'>Options <i class="fa fa-cogs"></i></button>
+                        <!--<hr>-->
+                        <div class="toggleContent" id="toggleContent">
+                            <button class="btn btn-info btn-sm pull-right" onclick='$("#toggleContent").hide("slide", {direction: "right"}, 500);'>Fermer <i class="fa fa-close"></i></button>
+                            <div class="">
+                                <h2 class="">Choisir un Nom complet pour votre bot</h2>&nbsp;
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">
+                                    <div class="col-md-6">
+                                        <label>Prénom</label>
+                                        <input id="post-last_name" type="text" placeholder="Prénom" class="form-control" ng-model='bot.last_name'> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Nom</label>
+                                        <input id="post-first_name" type="text" placeholder="Nom" class="form-control" ng-blur="formatFirstName()" ng-model='bot.first_name'> 
+                                    </div>
+                                    <br><br><br><br>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-info" id="addNodeEvent" ng-click='addNode($event);'>Ajouter un nœud <i class="fa fa-plus-circle"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading"><strong>N.B.</strong></div>
+                                        <div class="panel-body">
+                                            <p>Le Nom complet du bot sera affiché lors de l'intégration du script client</p>
+                                            <p><img src='http://cdn.amyevolution.com/chatbot/full_name.jpg' style="width: 50%;" /></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 class="">Script Client</h2>&nbsp;
+                            <div class="clearfix"></div>
+                            <div class="input-group">
+                                <input id="post-shortlink" type="text" class="form-control" value='<script type="application/javascript" src="http://local.dev/analyseViews/bots/chatbot.php/{{botId}}/{{bot.last_name}}{{bot.first_name}}"></script>' readonly="">                             <span class="input-group-btn">
+                                    <button class="btn" style="color: #000;" id="copy-button" data-clipboard-target="#post-shortlink">Copier</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </div>
+                    </div>
+                    <div class="x_content">
+                        <div class="orgchart" id="people"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Modifier un nœud</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label">Nœud parent</label>
+                        <select ng-model="parentNode" id="parentNodeSelect">
+                            <option value="">Pas de nœud</option>
+                            <option ng-repeat="parent in parentNodes" ng-if="parent.Reponse.in_response_to.length !== ''" value="{{parent.Reponse.id}}">{{parent.Reponse.in_response_to}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Ce que dit l'utilisateur</label>
+                        <textarea id="humainQuestion" placeholder="Question Humaine" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Ce que répond le bot</label>
+                        <textarea id="botResponse" placeholder="Réponse du Bot" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Mots clés</label>
+                        <textarea id="keyWords" placeholder="Mots clés" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="bt btn-default" data-dismiss="modal">Annuler</button>
+                <button type="button" class="bt btn-primary" ng-click='submitNode($event)' id='submitNode' data-action='update' data-node-id=''>Enregistrer</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+{
+  "name": "amyerp",
+  "version": "1.2.3",
+  "description": "AmyERP",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "erp",
+    "gestion",
+    "commerciale",
+    "transporteur"
+  ],
+  "author": "AmyEvolution",
+  "license": "MIT",
+  "dependencies": {
+    "serve-favicon": "^2.4.0"
+  },
+  "devDependencies": {
+    "body-parser": "^1.16.1",
+    "http": "0.0.0",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "path": "^0.12.7",
+    "reload": "^1.1.1"
+  }
+}

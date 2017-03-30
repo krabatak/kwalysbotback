@@ -1,0 +1,78 @@
+<div class="top_nav">
+    <div class="nav_menu">
+        <nav>
+            <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <img src="images/img.jpg" alt="">{{ connectedFullName}}
+                        <span class=" fa fa-angle-down"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                        <!--<li><a href="javascript:;"> Profil</a></li>-->
+<!--                        <li>
+                            <a href="{{baseUrl}}#/params">
+                                <span class="badge bg-red pull-right">{{ connectedPourcentProfile}}</span>
+                                <span>Paramètres</span>
+                            </a>
+                        </li>-->
+                        <li><a ng-click="help($event)">Aide</a></li>
+                        <li ng-controller="LoginCtrl"><a href="#" ng-click="logout()"><i class="fa fa-sign-out pull-right"></i> Se déconnecter</a></li>
+                    </ul>
+                </li>
+
+                <li role="presentation" class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="badge bg-green">{{countAllAlerts}}</span>
+                    </a>
+                    <ul ng-if="alerts.length > 0" id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                        <li ng-repeat="alert in alerts">
+                            <a>
+                                <span>
+                                    <span>Conv. BOT#{{alert.Bot.name}}</span>
+                                    <span class="time">{{ timeAgo(alert.Conversation.created, 'fr')}}</span>
+                                </span>
+                                <span class="message">
+                                    {{alert.Conversation.question|cut:true:100:' ...'}}
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <div class="text-center">
+                                <a>
+                                    <strong>Voir toutes les alertes</strong>
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="modal fade helpModal" tabindex="-1" id='helpModal' role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Aide <i class="fa fa-question-circle"></i></h4>
+            </div>
+            <div class="modal-body">
+                <h4>Aide à la gestion du bot</h4>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Fermer <i class='fa fa-close'></i></button>
+            </div>
+
+        </div>
+    </div>
+</div>
